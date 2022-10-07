@@ -61,10 +61,34 @@ internal class Programm
     {
         Console.Write("Введите название филиала: ");
         string? name = Console.ReadLine();
+        int? plan;
+        int? execute;
+        
+        PlanInput:
         Console.Write("Введите план выпуска: ");
-        string? plan = Console.ReadLine();
+        try
+        {
+            plan = int.Parse(Console.ReadLine());
+        }
+        catch
+        {
+            Console.WriteLine("Не число");
+            Console.WriteLine();
+            goto PlanInput;
+        }
+
+        PlanExeInput:
         Console.Write("Введите Сколько фактически выпущено: ");
-        string? execute = Console.ReadLine();
+        try
+        {
+            execute = int.Parse(Console.ReadLine());
+        }
+        catch
+        {
+            Console.WriteLine("Не число");
+            Console.WriteLine();
+            goto PlanExeInput;
+        }
 
         while (true)
         {
@@ -74,13 +98,15 @@ internal class Programm
             Console.Write("Редактировать данные? [д/н]: ");
             bool answer = Console.ReadLine()?.ToLower() == "д" ? true : false;
             if (!answer) break;
+
+            Console.WriteLine();
             
             Console.WriteLine("1. Называние филиала: {0}", name);
             Console.WriteLine("2. план выпуска: {0}", plan);
             Console.WriteLine("3. Сколько фактически выпущено: {0}", execute);
             Console.WriteLine("Любая цифра. выйти");
             Console.Write("Введите цифру данных: ");
-            
+
             int input = 0;
             try
             {
@@ -100,29 +126,77 @@ internal class Programm
                     break;
                 case 2:
                     Console.WriteLine("Старое: {0}", plan);
+
+                    PlanEdit:
                     Console.Write("Новое: ");
-                    plan = Console.ReadLine();
+                    try
+                    {
+                        plan = int.Parse(Console.ReadLine());
+                    }
+                    catch
+                    {
+                        Console.WriteLine("Не число");
+                        Console.WriteLine();
+                        goto PlanEdit;
+                    }
                     break;
                 case 3:
                     Console.WriteLine("Старое: {0}", execute);
+                    PlanExeEdit:
                     Console.Write("Новое: ");
-                    execute = Console.ReadLine();
+                    try
+                    {
+                        execute = int.Parse(Console.ReadLine());
+                    }
+                    catch
+                    {
+                        Console.WriteLine("Не число");
+                        Console.WriteLine();
+                        goto PlanExeEdit;
+                    }
                     break;
                 default:
                     break;
             }
 
+            Console.WriteLine();
         }
 
         if (name == null) 
         {
-            Console.WriteLine("Нет имени филиала");
+            Console.Write("Введите имя: ");
+            name = Console.ReadLine();
             return; 
         }
-        else if (plan == null || execute == null)
+        if (plan == null)
         {
-            Console.WriteLine("Нет плана или выпущенных");
-            return;
+            PlanReplace:
+            try
+            {
+                Console.Write("Введите план выпуска");
+                plan = int.Parse(Console.ReadLine());
+            }
+            catch 
+            {
+                Console.WriteLine("Не число");
+                Console.WriteLine();
+                goto PlanReplace;
+            }
+        } 
+        if (execute == null)
+        {
+            PlanExeReplace:
+            try
+            {
+                Console.Write("Введите план выпуска");
+                execute = int.Parse(Console.ReadLine());
+            }
+            catch
+            {
+                Console.WriteLine("Не число");
+                Console.WriteLine();
+                goto PlanExeReplace;
+            }
         }
 
 
@@ -134,8 +208,8 @@ internal class Programm
 
         try
         {
-            PlanArr.SetValue(int.Parse(plan), PlanArr.Length - 1);
-            PlanExeArr.SetValue(int.Parse(execute), PlanExeArr.Length - 1);
+            PlanArr.SetValue(plan, PlanArr.Length - 1);
+            PlanExeArr.SetValue(execute, PlanExeArr.Length - 1);
         }
         catch
         {
