@@ -5,10 +5,10 @@ internal class Programm
 
     public static void Main(String[] args)
     {
-        string[] Name = new string[] { "Филлиал №1", "Филлиал №2", "Филлиал №3","Филлиал №4","Филлиал №5","Филлиал №6","Филлиал №7","Филлиал №8"        };
+        string[] Name = new string[] { "Филлиал №1", "Филлиал №2", "Филлиал №3", "Филлиал №4", "Филлиал №5", "Филлиал №6", "Филлиал №7", "Филлиал №8" };
         int[] ReleasePlan = new int[] { 3465, 4201, 3490, 1364, 2795, 5486, 35187, 2577 };
         int[] ReleaseExecution = new int[] { 3270, 4587, 2708, 1480, 3270, 4587, 2708, 1480};
-        double[] ExecutionPlanToProcent = new double[] { 100.00 };
+        double[] ExecutionPlanToProcent = new double[] { };
         
         while (true)
         {
@@ -162,7 +162,9 @@ internal class Programm
         int MaxLenghtTable = columnLenght_NameArr
                                 + columnLenght_PlanArr
                                 + columnLenght_PlanExeArr
-                                + columnLenght_Percent + 3;
+                                + columnLenght_Percent;
+
+        #region Header
 
         //Верхний слой головы
         for (int i=0; i<=MaxLenghtTable; i++)
@@ -194,24 +196,24 @@ internal class Programm
                     i == (columnLenght_PlanArr + columnLenght_NameArr + 1) ||
                     i == (columnLenght_PlanExeArr + columnLenght_PlanArr + columnLenght_NameArr + 1))
                     Console.Write("│");
-                else if (i == (int)Math.Round( columnLenght_NameArr/2D ))
+                else if (i == 6)
                 {
-                    Console.Write("Наименования");
+                    Console.Write("Наименования ");
                     i += "Наименования".Length;
                 }
-                else if (i == (int)Math.Round( columnLenght_PlanArr + columnLenght_NameArr /2D ))
+                else if (i == columnLenght_NameArr + 6)
                 {
-                    Console.Write("План выпуска");
+                    Console.Write("План выпуска ");
                     i += "План выпуска".Length;
                 }
-                else if (i == (int)Math.Round( columnLenght_PlanExeArr + columnLenght_PlanArr + columnLenght_NameArr /2D ))
+                else if (i == columnLenght_PlanArr + columnLenght_NameArr + 6)
                 {
-                    Console.Write("Фактически Выпущено");
+                    Console.Write("Фактически Выпущено ");
                     i += "Фактически Выпущено".Length;
                 }
-                else if (i == (int)Math.Round( columnLenght_Percent + columnLenght_PlanExeArr + columnLenght_PlanArr + columnLenght_NameArr /2D ))
+                else if (i == columnLenght_PlanExeArr + columnLenght_PlanArr + columnLenght_NameArr + 6)
                 {
-                    Console.Write("% выполнения");
+                    Console.Write("% выполнения ");
                     i += "% выполнения".Length;
                 }
                 else
@@ -249,6 +251,97 @@ internal class Programm
                 Console.Write("═");
         }
 
+        #endregion
+
+        Console.WriteLine();
+
+        #region Body
+
+        //Внутренний слой
+        for (int l = 0; l < NameArr.Length; l++)
+        {
+            for (int i = 0; i <= MaxLenghtTable; i++)
+            {
+                if (i == 0 ||
+                    i == MaxLenghtTable ||
+                    i == (columnLenght_NameArr + 1) ||
+                    i == (columnLenght_PlanArr + columnLenght_NameArr + 1) ||
+                    i == (columnLenght_PlanExeArr + columnLenght_PlanArr + columnLenght_NameArr + 1))
+                    Console.Write("│");
+                else
+                    Console.Write(" ");
+            }
+
+            Console.WriteLine();
+
+            for (int i = 0; i <= MaxLenghtTable; i++)
+            {
+
+                if (i == 0 ||
+                    i == MaxLenghtTable ||
+                    i == (columnLenght_NameArr + 1) ||
+                    i == (columnLenght_PlanArr + columnLenght_NameArr + 1) ||
+                    i == (columnLenght_PlanExeArr + columnLenght_PlanArr + columnLenght_NameArr + 1))
+                    Console.Write("│");
+                else if (i == 6)
+                {
+                    Console.Write(NameArr[l] + " ");
+                    i += NameArr[l].Length;
+                }
+                else if (i == columnLenght_PlanArr + columnLenght_NameArr - PlanArr[l].ToString().Length - 5)
+                {
+                    Console.Write(PlanArr[l] + " ");
+                    i += PlanArr[l].ToString().Length;
+                }
+                else if (i == columnLenght_PlanArr + columnLenght_NameArr + columnLenght_PlanExeArr - PlanExeArr[l].ToString().Length - 5)
+                {
+                    Console.Write(PlanExeArr[l] + " ");
+                    i += PlanExeArr[l].ToString().Length;
+                }
+                else if (i == columnLenght_PlanExeArr + columnLenght_PlanArr + columnLenght_NameArr + (int)(columnLenght_Percent/2D))
+                {
+                    Console.Write(Procent[l] + " ");
+                    i += Procent[l].ToString().Length;
+                }
+                else
+                    Console.Write(" ");
+            }
+
+            Console.WriteLine();
+
+        }
+
+        // отступ
+        for (int i = 0; i <= MaxLenghtTable; i++)
+        {
+            if (i == 0 ||
+                i == MaxLenghtTable ||
+                i == (columnLenght_NameArr + 1) ||
+                i == (columnLenght_PlanArr + columnLenght_NameArr + 1) ||
+                i == (columnLenght_PlanExeArr + columnLenght_PlanArr + columnLenght_NameArr + 1))
+                Console.Write("│");
+            else
+                Console.Write(" ");
+        }
+
+        Console.WriteLine();
+
+        //Нижний слой
+        for (int i = 0; i <= MaxLenghtTable; i++)
+        {
+            if (i == 0)
+                Console.Write("╞");
+            else if (i == (columnLenght_NameArr + 1) ||
+                     i == (columnLenght_PlanArr + columnLenght_NameArr + 1) ||
+                     i == (columnLenght_PlanExeArr + columnLenght_PlanArr + columnLenght_NameArr + 1))
+                Console.Write("╪");
+            else if (i == MaxLenghtTable)
+                Console.Write("╡");
+            else
+                Console.Write("═");
+        }
+
+        #endregion
 
     }
 
@@ -257,8 +350,13 @@ internal class Programm
 
     }
 
-    public static void CalculatPercentComplation(int[] Arr1, int[] Arr2, ref double[] procent)
+    public static void CalculatPercentComplation(int[] PlanArr, int[] ExePlan, ref double[] procent)
     {
+        Array.Resize(ref procent, PlanArr.Length);
 
+        for (int i=0; i<PlanArr.Length; i++)
+        {
+            procent[i] = Math.Round(Convert.ToDouble(ExePlan[i]) / Convert.ToDouble(PlanArr[i]) * 100, 2);
+    }
     }
 }
