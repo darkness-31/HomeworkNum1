@@ -59,8 +59,22 @@ internal class Programm
 
     public static void WriteData(ref string[] NameArr, ref int[] PlanArr, ref int[] PlanExeArr)
     {
+        NameInput:
         Console.Write("Введите название филиала: ");
         string? name = Console.ReadLine();
+        if (name == null)
+        {
+            Console.WriteLine("Пустое значение");
+            Console.WriteLine();
+            goto NameInput;
+        }
+        else if (NameArr.Contains(name))
+        {
+            Console.WriteLine("Есть похожее название в таблице");
+            Console.WriteLine();
+            goto NameInput;
+        }
+
         int? plan;
         int? execute;
         
@@ -159,14 +173,15 @@ internal class Programm
                     break;
             }
 
-            Console.WriteLine();
         }
 
-        if (name == null) 
+        ReplaceName:
+        if (name == null)
         {
+            Console.WriteLine();
             Console.Write("Введите имя: ");
             name = Console.ReadLine();
-            return; 
+            goto ReplaceName;
         }
         if (plan == null)
         {
