@@ -343,11 +343,68 @@ internal class Programm
 
         #endregion
 
+        Console.WriteLine();
+
+        #region Footer
+
+        CalculatTotals(PlanArr, PlanExeArr, out int PlanTotal, out int PlanExeTotal, out double ProcentTotal);
+        for (int i = 0; i <= MaxLenghtTable; i++)
+        {
+            if (i == 0 ||
+                i == MaxLenghtTable ||
+                i == (columnLenght_NameArr + 1) ||
+                i == (columnLenght_PlanArr + columnLenght_NameArr + 1) ||
+                i == (columnLenght_PlanExeArr + columnLenght_PlanArr + columnLenght_NameArr + 1))
+                Console.Write("│");
+            else if (i == 6)
+            {
+                Console.Write("Итог: ");
+                i += "Итог:".Length;
+            }
+            else if (i == columnLenght_PlanArr + columnLenght_NameArr - PlanTotal.ToString().Length - 5)
+            {
+                Console.Write(PlanTotal + " ");
+                i += PlanTotal.ToString().Length;
+            }
+            else if (i == columnLenght_PlanArr + columnLenght_NameArr + columnLenght_PlanExeArr - PlanExeTotal.ToString().Length - 5)
+            {
+                Console.Write(PlanExeTotal + " ");
+                i += PlanExeTotal.ToString().Length;
+            }
+            else if (i == columnLenght_PlanExeArr + columnLenght_PlanArr + columnLenght_NameArr + columnLenght_Percent - ProcentTotal.ToString().Length - 5)
+            {
+                Console.Write(ProcentTotal + " ");
+                i += ProcentTotal.ToString().Length;
+            }
+            else
+                Console.Write(" ");
+        }
+
+        Console.WriteLine();
+
+        for (int i = 0; i <= MaxLenghtTable; i++)
+        {
+            if (i == 0)
+                Console.Write("╘");
+            else if (i == (columnLenght_NameArr + 1) ||
+                     i == (columnLenght_PlanArr + columnLenght_NameArr + 1) ||
+                     i == (columnLenght_PlanExeArr + columnLenght_PlanArr + columnLenght_NameArr + 1))
+                Console.Write("╧");
+            else if (i == MaxLenghtTable)
+                Console.Write("╛");
+            else
+                Console.Write("═");
+        }
+
+        Console.WriteLine();
+        #endregion
     }
 
-    public static void CalculatTotals()
+    public static void CalculatTotals(int[] PlanArr, int[] ExePlan, out int PlanTotal, out int PlanExeTotal, out double ProcentTotal)
     {
-
+        PlanTotal = PlanArr.Sum();
+        PlanExeTotal = ExePlan.Sum();
+        ProcentTotal = Math.Round(Convert.ToDouble(PlanTotal) / Convert.ToDouble(PlanExeTotal) * 100, 2);
     }
 
     public static void CalculatPercentComplation(int[] PlanArr, int[] ExePlan, ref double[] procent)
