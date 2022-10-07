@@ -62,7 +62,7 @@ internal class Programm
         NameInput:
         Console.Write("Введите название филиала: ");
         string? name = Console.ReadLine();
-        if (name == null)
+        if (name == "")
         {
             Console.WriteLine("Пустое значение");
             Console.WriteLine();
@@ -176,7 +176,7 @@ internal class Programm
         }
 
         ReplaceName:
-        if (name == null)
+        if (name == "")
         {
             Console.WriteLine();
             Console.Write("Введите имя: ");
